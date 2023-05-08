@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { jwtVerify } from 'jose';
 import { NextRequest, NextResponse } from 'next/server';
 

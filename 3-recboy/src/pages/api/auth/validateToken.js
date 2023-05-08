@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import jwt from 'jsonwebtoken';
 
 export default async function handler(req, res) {
