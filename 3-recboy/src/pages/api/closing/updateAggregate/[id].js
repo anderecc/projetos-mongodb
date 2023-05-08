@@ -33,7 +33,7 @@ export default async function handler(req, res) {
                     .then((user) => res.status(200).send({ data: user.data }))
                     .catch((err) => res.status(400).send({ err }))
             )
-            .then((err) => res.status(400).send({ err }));
+            .catch((err) => res.status(400).send({ err }));
     } catch (error) {
         return res.status(400).send({
             error: 'Ocorreu algum erro ao tentar efetuar seu registro.',
