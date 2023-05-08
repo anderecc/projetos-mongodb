@@ -28,7 +28,7 @@ export async function middleware(req = NextRequest) {
     const verifiedHeader = header && (await verifyAuth(header));
 
     if (req.nextUrl.pathname.startsWith('/auth/login') && !verifiedToken) {
-        return;
+        return NextResponse.next();
     }
 
     if (!verifiedToken && appRoutePrivate) {
