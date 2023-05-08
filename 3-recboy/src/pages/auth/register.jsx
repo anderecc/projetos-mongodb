@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import Container from '@/Components/Container';
@@ -7,9 +7,16 @@ import Head from '@/Components/Head';
 import Header from '@/Components/Header';
 import Loading from '@/Components/Loading';
 import Form from '@/Components/auth/Form';
+import { useRouter } from 'next/router';
 
 const Register = () => {
     const context = useSelector((state) => state.context);
+    const auth = useSelector((state) => state.auth);
+    const { push } = useRouter();
+
+    useEffect(() => {
+        if (auth.userToken) push('/dashboard');
+    }, [auth.userToken]);
 
     return (
         <>
