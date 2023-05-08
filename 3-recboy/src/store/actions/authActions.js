@@ -39,7 +39,7 @@ export const authResetState = () => {
     };
 };
 
-export const authLogin = (values, push) => {
+export const authLogin = (values) => {
     return async (dispatch, getState) => {
         dispatch(contextSetLoading(true));
         await axios
@@ -55,8 +55,6 @@ export const authLogin = (values, push) => {
 
                         await dispatch(authSetUser({ id, name, email }));
                         await dispatch(authSetUserToken(token));
-
-                        return push('/dashboard');
                     })
                     .catch((err) => {
                         const state = getState();
@@ -81,7 +79,7 @@ export const authLogin = (values, push) => {
     };
 };
 
-export const authRegister = (values, push) => {
+export const authRegister = (values) => {
     return async (dispatch, getState) => {
         dispatch(contextSetLoading(true));
         await axios
@@ -97,7 +95,6 @@ export const authRegister = (values, push) => {
 
                         await dispatch(authSetUser({ id, name, email }));
                         await dispatch(authSetUserToken(token));
-                        return push('/dashboard');
                     })
                     .catch((err) => {
                         const state = getState();
