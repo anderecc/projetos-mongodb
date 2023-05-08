@@ -1,0 +1,62 @@
+@import '../_mixins'
+@import '../_variables'
+
+.container
+    display: flex
+    align-items: flex-start
+    gap: 1rem
+    flex-direction: column
+.btn_closing_week
+    @include button
+    padding: .7rem 1rem
+    font-size: 1rem
+    background-color: $bg-green
+    color: $text-white
+
+.total_week
+    font-size: 1.3rem
+    font-weight: 600
+
+.week_container
+    width: 100%
+    font-size: 1rem
+
+.summary
+    @include flex-items
+    justify-content: space-between
+    font-weight: 600
+    font-size: 1.2rem
+
+.btn_container
+    @include flex
+    gap: 1rem
+    a, button
+        font-size: 1.2rem
+    button
+        @include button
+        color: $text-red
+    a
+        color: $text-blue
+
+.item_container
+    @include  flex-content
+    padding: 1rem 0
+    align-items: flex-start
+    gap: .5rem
+    font-size: 1rem
+    font-weight: 500
+    flex-direction: column
+
+.item_content
+    display: flex
+    flex-direction: column
+    width: 100%
+    justify-content: space-between
+
+.btn_end_container
+    @include flex
+    gap: 1rem
+    a
+        color: $bg-dark
+        font-weight: 600
+        font-size: 1.2rem

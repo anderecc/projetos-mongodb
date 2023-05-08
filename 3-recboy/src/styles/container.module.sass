@@ -1,0 +1,26 @@
+@import './_mixins'
+@import './_variables'
+
+.container
+    padding: 2rem
+    min-height: calc( 100vh - 125px )
+    position: relative
+
+.auth
+    @include flex
+
+.dashboard
+    display: flex
+    flex-direction: column
+    padding: 0
+    gap: 1rem
+
+.closing
+    display: flex
+    flex-direction: column
+    padding: 2rem 1rem
+    gap: 1rem
+
+.home
+    @include flex
+    font-size: 2rem

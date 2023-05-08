@@ -1,0 +1,79 @@
+@import './_mixins'
+@import './_variables'
+
+.container
+    @include flex-items
+    padding: 1rem
+    background-color: $bg-dark
+    height: 75px
+    color: $text-white
+    justify-content: space-between
+
+.nav_container
+    .btn_open
+        @include button
+        color: $text-white
+        font-size: 1.7rem
+        @include desktop
+            display: none
+
+.nav_content
+    display: flex
+    align-items: flex-start
+    justify-content: flex-start
+    flex-direction: column
+    position: absolute
+    padding: 4rem 1rem
+    left: 0
+    top: 0
+    height: 100vh
+    width: 60%
+    background-color: rgba(0, 0, 0, .92)
+    gap: 1rem
+    font-size: 1.2rem
+    transform: translateX(-100%)
+    transition: transform .3s
+    z-index: 10
+    @include desktop
+        transform: translateX(0)
+        position: relative
+        height: auto
+        flex-direction: row
+        background-color: transparent
+        padding: 1rem
+    li
+        a
+            @include transition
+            color: $text-white
+            &:hover
+                color: $text-white-hover
+    .btn_close
+        @include button
+        position: absolute
+        right: 5%
+        top: 1rem
+        color: $text-red
+        font-size: 1.5rem
+        @include desktop
+            display: none
+
+.nav_content.active
+    transform: translateX(0)
+
+.auth_container
+    @include flex
+    gap: 1rem
+    font-size: 1.3rem
+    li
+        a
+            @include transition
+            color: $text-white
+            &:hover
+                color: $text-white-hover
+
+.btn_signOut
+    @include button
+    font-size: 1.3rem
+    color: $text-white
+    &:hover
+        color: $text-white-hover

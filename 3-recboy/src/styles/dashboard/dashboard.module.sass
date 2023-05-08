@@ -1,0 +1,18 @@
+@import '../_mixins'
+@import '../_variables'
+
+.container
+    padding: 1rem
+
+.btn_container
+    display: flex
+    button
+        @include button
+        padding: 1rem
+        border-radius: 0
+        flex: 1
+        border-bottom: 2px solid transparent
+        font-size: 1rem
+        font-weight: 500
+    button.active
+        border-bottom-color: $bg-dark

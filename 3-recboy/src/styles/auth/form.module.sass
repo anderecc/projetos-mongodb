@@ -1,0 +1,35 @@
+@import '../_mixins'
+@import '../_variables'
+
+.container
+    @include flex
+    flex-direction: column
+    gap: 1rem
+    font-size: 1.2rem
+    min-width: 60%
+
+.title
+    color: $title-blue
+
+.input_container
+    @include flex-items
+    justify-content: space-between
+    flex-direction: column
+    gap: .5rem
+    input
+        @include input
+
+.btn_submit
+    @include button
+    background-color: $bg-blue
+    color: $text-white
+    padding: .7rem 1rem
+
+.link
+    font-size: 1rem
+    a
+        font-weight: 600
+        @include transition
+        color: $text-blue
+        &:hover
+            color: $text-blue-hover
