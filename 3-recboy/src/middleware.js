@@ -36,7 +36,7 @@ export async function middleware(req = NextRequest) {
     }
 
     if (req.url.includes('/auth') && verifiedToken) {
-        return NextResponse.rewrite(new URL('/dashboard', req.url));
+        return NextResponse.redirect(new URL('/dashboard', req.url));
     }
 
     if (!verifiedHeader && apiRoutePrivate) {
