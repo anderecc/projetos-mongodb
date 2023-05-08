@@ -31,7 +31,7 @@ export default async function handler(req, res) {
                     }
                 )
                     .then((user) => res.status(200).send({ data: user.data }))
-                    .then((err) => res.status(400).send({ err }))
+                    .catch((err) => res.status(400).send({ err }))
             )
             .then((err) => res.status(400).send({ err }));
     } catch (error) {
