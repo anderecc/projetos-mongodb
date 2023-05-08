@@ -4,9 +4,10 @@ import {
     CLOSING_SET_DATA,
     CLOSING_SET_DAY_EDIT,
 } from '../types';
-import { contextSetDate } from './contextActions';
+import { contextSetDate, contextSetLoading } from './contextActions';
 
 export const closingGetData = (id, token) => (dispatch) => {
+    dispatch(contextSetLoading(true));
     axios
         .get(`/api/closing/getData/${id}`, {
             headers: { authenticate: token },
@@ -16,8 +17,12 @@ export const closingGetData = (id, token) => (dispatch) => {
             date = date ? date.slice(1, 2) : '';
             dispatch(contextSetDate(date || ''));
             dispatch(closingSetData(res.data.data));
+            dispatch(contextSetLoading(false));
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+            console.log(err);
+            dispatch(contextSetLoading(false));
+        });
 };
 
 export const closingSetData = (data) => (dispatch) => {
@@ -33,6 +38,7 @@ export const closingSetData = (data) => (dispatch) => {
 };
 
 export const closingSetValueDay = (value, date) => (dispatch, getState) => {
+    dispatch(contextSetLoading(true));
     const state = getState();
     const newValues = [...state.closing.day.values];
     if (newValues.length === 0) {
@@ -66,11 +72,18 @@ export const closingSetValueDay = (value, date) => (dispatch, getState) => {
                 },
             }
         )
-        .then((res) => dispatch(closingSetData(res.data.data)))
-        .catch((err) => console.log(err));
+        .then((res) => {
+            dispatch(closingSetData(res.data.data));
+            dispatch(contextSetLoading(false));
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(contextSetLoading(false));
+        });
 };
 
 export const closingUpdateValueDay = (value, index) => (dispatch, getState) => {
+    dispatch(contextSetLoading(true));
     const state = getState();
     const newValues = [...state.closing.day.values];
     newValues[index] = value;
@@ -89,11 +102,18 @@ export const closingUpdateValueDay = (value, index) => (dispatch, getState) => {
                 },
             }
         )
-        .then((res) => dispatch(closingSetData(res.data.data)))
-        .catch((err) => console.log(err));
+        .then((res) => {
+            dispatch(closingSetData(res.data.data));
+            dispatch(contextSetLoading(false));
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(contextSetLoading(false));
+        });
 };
 
 export const closingDeleteValueDay = (index) => (dispatch, getState) => {
+    dispatch(contextSetLoading(true));
     const state = getState();
     const newValues = [...state.closing.day.values];
     newValues.splice(index, 1);
@@ -112,11 +132,18 @@ export const closingDeleteValueDay = (index) => (dispatch, getState) => {
                 },
             }
         )
-        .then((res) => dispatch(closingSetData(res.data.data)))
-        .catch((err) => console.log(err));
+        .then((res) => {
+            dispatch(closingSetData(res.data.data));
+            dispatch(contextSetLoading(false));
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(contextSetLoading(false));
+        });
 };
 
 export const closingDay = (push) => (dispatch, getState) => {
+    dispatch(contextSetLoading(true));
     const state = getState();
 
     if (state.closing.day.values.length !== 0) {
@@ -153,15 +180,23 @@ export const closingDay = (push) => (dispatch, getState) => {
                     .then(async (res) => {
                         await dispatch(closingSetData(res.data.data));
                         await dispatch(contextSetDate(''));
+                        dispatch(contextSetLoading(false));
                         push('/dashboard');
                     })
-                    .catch((err) => console.log(err));
+                    .catch((err) => {
+                        console.log(err);
+                        dispatch(contextSetLoading(false));
+                    });
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err);
+                dispatch(contextSetLoading(false));
+            });
     }
 };
 
 export const closingWeek = () => (dispatch, getState) => {
+    dispatch(contextSetLoading(true));
     const state = getState();
 
     const newValues = [...state.closing.aggregate.values];
@@ -194,13 +229,23 @@ export const closingWeek = () => (dispatch, getState) => {
                         },
                     }
                 )
-                .then((res) => dispatch(closingSetData(res.data.data)))
-                .catch((err) => console.log(err));
+                .then((res) => {
+                    dispatch(closingSetData(res.data.data));
+                    dispatch(contextSetLoading(false));
+                })
+                .catch((err) => {
+                    console.log(err);
+                    dispatch(contextSetLoading(false));
+                });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+            console.log(err);
+            dispatch(contextSetLoading(false));
+        });
 };
 
 export const closingDeleteWeek = (index) => (dispatch, getState) => {
+    dispatch(contextSetLoading(true));
     const state = getState();
     const newValues = [...state.closing.week.values];
     newValues.splice(index, 1);
@@ -219,8 +264,14 @@ export const closingDeleteWeek = (index) => (dispatch, getState) => {
                 },
             }
         )
-        .then((res) => dispatch(closingSetData(res.data.data)))
-        .catch((err) => console.log(err));
+        .then((res) => {
+            dispatch(closingSetData(res.data.data));
+            dispatch(contextSetLoading(false));
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(contextSetLoading(false));
+        });
 };
 
 export const closingWeekSetDayUpdate = (index) => (dispatch, getState) => {
@@ -260,6 +311,8 @@ export const closingWeekChangeValueDay =
     };
 
 export const closingUpdateDayInWeek = (push) => (dispatch, getState) => {
+    dispatch(contextSetLoading(true));
+
     const state = getState();
     const newValues = [...state.closing.week.values];
     const { index, date, values, total } = state.closing.dayToEdit;
@@ -281,9 +334,13 @@ export const closingUpdateDayInWeek = (push) => (dispatch, getState) => {
         .then(async (res) => {
             await dispatch(closingSetData(res.data.data));
             await dispatch({ type: CLOSING_RESET_DAY_EDIT });
+            dispatch(contextSetLoading(false));
             push('/dashboard');
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+            console.log(err);
+            dispatch(contextSetLoading(false));
+        });
 };
 
 export const closingCancelEditDay = () => (dispatch) => {
