@@ -6,8 +6,8 @@ import {
     AUTH_SET_USER_TOKEN,
     AUTH_SET_VALUES,
 } from '../types';
-import { contextSetLoading } from './contextActions';
-import { closingGetData } from './closingActions';
+import { contextResetState, contextSetLoading } from './contextActions';
+import { closingGetData, closingResetState } from './closingActions';
 
 export const authSetValues = (values) => {
     return (dispatch) => {
@@ -151,9 +151,10 @@ export const authPersist = (token) => {
 export const authLogOut = (push) => {
     return async (dispatch) => {
         await dispatch(authResetState());
+        await dispatch(contextResetState());
+        await dispatch(closingResetState());
         document.cookie =
             await 'user-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
         await push('/auth/login');
-        return window.location.reload(false);
     };
 };

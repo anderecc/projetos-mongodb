@@ -1,6 +1,7 @@
 import {
     CONTEXT_CHANGE_PERCENT,
     CONTEXT_CHANGE_VALUE,
+    CONTEXT_RESET_STATE,
     CONTEXT_SET_DATE,
     CONTEXT_SET_LOADING,
     CONTEXT_WEEK_TO_PDF,
@@ -26,4 +27,8 @@ export const contextChangePercent = (value) => (dispatch) =>
 
 export const contextSetWeekToPdf = (week) => (dispatch) => {
     dispatch({ type: CONTEXT_WEEK_TO_PDF, payload: week });
+};
+
+export const contextResetState = () => (dispatch) => {
+    dispatch({ type: CONTEXT_RESET_STATE });
 };

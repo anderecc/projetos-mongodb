@@ -1,6 +1,7 @@
 import {
     CONTEXT_CHANGE_PERCENT,
     CONTEXT_CHANGE_VALUE,
+    CONTEXT_RESET_STATE,
     CONTEXT_SET_DATE,
     CONTEXT_SET_LOADING,
     CONTEXT_WEEK_TO_PDF,
@@ -32,6 +33,17 @@ const contextReducer = (state = initialState, action) => {
 
         case CONTEXT_WEEK_TO_PDF:
             return { ...state, weekToPdf: { ...action.payload } };
+
+        case CONTEXT_RESET_STATE:
+            return {
+                loading: false,
+                date: '',
+                weekDate: '',
+                month: '',
+                value: 0,
+                percent: 0,
+                weekToPdf: { values: [], total: 0 },
+            };
 
         default:
             return { ...state };

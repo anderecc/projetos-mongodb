@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
     CLOSING_RESET_DAY_EDIT,
+    CLOSING_RESET_STATE,
     CLOSING_SET_DATA,
     CLOSING_SET_DAY_EDIT,
 } from '../types';
@@ -371,4 +372,8 @@ export const closingAddValueInDayToEdit = (value) => (dispatch, getState) => {
         type: CLOSING_SET_DAY_EDIT,
         payload: { values: newValues, total },
     });
+};
+
+export const closingResetState = () => (dispatch) => {
+    dispatch({ type: CLOSING_RESET_STATE });
 };

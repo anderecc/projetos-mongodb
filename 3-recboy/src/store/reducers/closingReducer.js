@@ -1,5 +1,6 @@
 import {
     CLOSING_RESET_DAY_EDIT,
+    CLOSING_RESET_STATE,
     CLOSING_SET_DATA,
     CLOSING_SET_DAY_EDIT,
 } from '../types';
@@ -34,6 +35,25 @@ const closingReducer = (state = initialState, action) => {
         case CLOSING_RESET_DAY_EDIT:
             return {
                 ...state,
+                dayToEdit: {
+                    index: null,
+                    date: '',
+                    values: [],
+                    total: 0,
+                },
+            };
+
+        case CLOSING_RESET_STATE:
+            return {
+                day: {},
+                week: {
+                    values: [],
+                    total: 0,
+                },
+                aggregate: {
+                    values: [],
+                    total: 0,
+                },
                 dayToEdit: {
                     index: null,
                     date: '',
