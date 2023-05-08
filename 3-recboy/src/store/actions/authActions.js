@@ -56,7 +56,7 @@ export const authLogin = (values, push) => {
                         await dispatch(authSetUser({ id, name, email }));
                         await dispatch(authSetUserToken(token));
 
-                        return push('/dashboard');
+                        push('/dashboard');
                     })
                     .catch((err) => {
                         const state = getState();
@@ -97,7 +97,7 @@ export const authRegister = (values, push) => {
 
                         await dispatch(authSetUser({ id, name, email }));
                         await dispatch(authSetUserToken(token));
-                        return push('/dashboard');
+                        push('/dashboard');
                     })
                     .catch((err) => {
                         const state = getState();
