@@ -49,7 +49,31 @@ export default async function handler(req, res) {
                         error: 'Já existe um usuário com esse e-mail.',
                     });
                 } else {
-                    User.create({ name, email, password: passwordHash })
+                    User.create({
+                        name,
+                        email,
+                        password: passwordHash,
+                        data: {
+                            closingDay: {
+                                date: '00/00/0000',
+                                values: [],
+                                total: 0,
+                            },
+                            closingWeek: {
+                                values: [],
+                                total: 0,
+                            },
+                            closingAggregate: {
+                                values: [
+                                    {
+                                        values: [],
+                                        total: 0,
+                                    },
+                                ],
+                                total: 0,
+                            },
+                        },
+                    })
                         .then(async (user) => {
                             const { id, name, email } = user;
                             const token = await jwt.sign(
