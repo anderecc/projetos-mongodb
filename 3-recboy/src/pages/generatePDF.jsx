@@ -10,7 +10,7 @@ import Footer from '@/Components/Footer';
 import HeadApp from '@/Components/Head';
 import Header from '@/Components/Header';
 import Loading from '@/Components/Loading';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const GeneratePDF = () => {
     const { loading, weekToPdf } = useSelector((state) => state.context);

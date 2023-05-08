@@ -11,7 +11,7 @@ import {
     authSetValues,
 } from '@/store/actions/authActions';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const Form = (props) => {
     const auth = useSelector((state) => state.auth);

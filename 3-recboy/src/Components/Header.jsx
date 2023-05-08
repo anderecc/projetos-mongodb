@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import styles from '../styles/header.module.sass';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { authLogOut } from '@/store/actions/authActions';
 
 const Header = () => {

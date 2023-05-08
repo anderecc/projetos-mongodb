@@ -39,7 +39,7 @@ export const authResetState = () => {
     };
 };
 
-export const authLogin = (values) => {
+export const authLogin = (values, push) => {
     return async (dispatch, getState) => {
         dispatch(contextSetLoading(true));
         await axios
@@ -55,6 +55,8 @@ export const authLogin = (values) => {
 
                         await dispatch(authSetUser({ id, name, email }));
                         await dispatch(authSetUserToken(token));
+
+                        return push('/dashboard');
                     })
                     .catch((err) => {
                         const state = getState();
@@ -79,7 +81,7 @@ export const authLogin = (values) => {
     };
 };
 
-export const authRegister = (values) => {
+export const authRegister = (values, push) => {
     return async (dispatch, getState) => {
         dispatch(contextSetLoading(true));
         await axios
@@ -95,6 +97,7 @@ export const authRegister = (values) => {
 
                         await dispatch(authSetUser({ id, name, email }));
                         await dispatch(authSetUserToken(token));
+                        return push('/dashboard');
                     })
                     .catch((err) => {
                         const state = getState();
@@ -155,6 +158,6 @@ export const authLogOut = (push) => {
         await dispatch(closingResetState());
         document.cookie =
             await 'user-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-        await push('/auth/login');
+        return push('/auth/login');
     };
 };
