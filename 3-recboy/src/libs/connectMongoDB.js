@@ -6,7 +6,7 @@ const connectMongoDB = async () => {
         return mongoose.connection.asPromise();
     }
 
-    return await mongoose.connect(process.env.MONGO_STRING);
+    return await mongoose.connect(process.env.NEXT_PUBLIC_MONGO_STRING);
 };
 
 export default connectMongoDB;
