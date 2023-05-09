@@ -50,12 +50,12 @@ export async function middleware(req = NextRequest) {
     }
 
     if (req.url.includes('/auth') && verifiedToken) {
-        const url = `${base_url}/dashboard`;
+        const url = base_url.toString() + '/dashboard';
         return NextResponse.redirect(url);
     }
 
     if (appRoutePrivate && !verifiedToken) {
-        const url = `${base_url}/auth/login`;
+        const url = base_url.toString() + '/auth/login';
         return NextResponse.redirect(url);
     }
 
