@@ -6,6 +6,8 @@ export async function middleware(req = NextRequest) {
     const token = await req.cookies.get('user-token')?.value;
     const header = await req.headers.get('authenticate');
 
+    const base_url = req.nextUrl.origin;
+
     const appRoutePrivate =
         req.url.includes('/closing') ||
         req.url.includes('/dashboard') ||
@@ -48,11 +50,11 @@ export async function middleware(req = NextRequest) {
     }
 
     if (req.url.includes('/auth') && verifiedToken) {
-        return NextResponse.redirect('/dashboard');
+        return NextResponse.redirect(`${base_url}/dashboard`);
     }
 
     if (appRoutePrivate && !verifiedToken) {
-        return NextResponse.redirect('/auth/login');
+        return NextResponse.redirect(`${base_url}/auth/login`);
     }
 
     if (appRoutePrivate && verifiedToken) {
@@ -63,5 +65,11 @@ export async function middleware(req = NextRequest) {
 }
 
 export const config = {
-    matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+    matcher: [
+        '/dashboard',
+        '/closing/:path*',
+        '/auth/:path*',
+        '/api/:path*',
+        '/generatePDF',
+    ],
 };
