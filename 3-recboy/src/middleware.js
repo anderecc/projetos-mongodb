@@ -25,7 +25,7 @@ export async function middleware(req = NextRequest) {
     const verifiedToken = token && (await verifyAuth(token));
     const verifiedHeader = header && (await verifyAuth(header));
 
-    if (req.url.includes('/api/auth')) {
+    if (req.url.includes('/api/auth') || req.url.includes('/_next')) {
         return NextResponse.next();
     }
 
