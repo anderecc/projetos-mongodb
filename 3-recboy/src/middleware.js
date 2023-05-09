@@ -48,11 +48,11 @@ export async function middleware(req = NextRequest) {
     }
 
     if (req.url.includes('/auth') && verifiedToken) {
-        return NextResponse.redirect(new URL('/dashboard', req.url));
+        return NextResponse.redirect('/dashboard');
     }
 
     if (appRoutePrivate && !verifiedToken) {
-        return NextResponse.redirect(new URL('/auth/login', req.url));
+        return NextResponse.redirect('/auth/login');
     }
 
     if (appRoutePrivate && verifiedToken) {
