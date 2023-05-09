@@ -7,25 +7,6 @@ import {
 } from '../types';
 import { contextSetDate, contextSetLoading } from './contextActions';
 
-export const closingGetData = (id, token) => (dispatch) => {
-    dispatch(contextSetLoading(true));
-    axios
-        .get(`/api/closing/getData/${id}`, {
-            headers: { authenticate: token },
-        })
-        .then((res) => {
-            let { date } = res.data.data.closingDay;
-            date = date ? date.slice(1, 2) : '';
-            dispatch(contextSetDate(date || ''));
-            dispatch(closingSetData(res.data.data));
-            dispatch(contextSetLoading(false));
-        })
-        .catch((err) => {
-            console.log(err);
-            dispatch(contextSetLoading(false));
-        });
-};
-
 export const closingSetData = (data) => (dispatch) => {
     let { closingDay, closingWeek, closingAggregate } = data;
     dispatch({
@@ -36,6 +17,25 @@ export const closingSetData = (data) => (dispatch) => {
             aggregate: closingAggregate,
         },
     });
+};
+
+export const closingGetData = (id, token) => (dispatch) => {
+    dispatch(contextSetLoading(true));
+    axios
+        .get(`/api/closing/getData/${id}`, {
+            headers: { authenticate: token },
+        })
+        .then((res) => {
+            let { date } = res.data.data.closingDay;
+            date = date ? date.slice(1, 2) : '00';
+            dispatch(contextSetDate(date));
+            dispatch(closingSetData(res.data.data));
+            dispatch(contextSetLoading(false));
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch(contextSetLoading(false));
+        });
 };
 
 export const closingSetValueDay = (value, date) => (dispatch, getState) => {
@@ -84,7 +84,6 @@ export const closingSetValueDay = (value, date) => (dispatch, getState) => {
 };
 
 export const closingUpdateValueDay = (value, index) => (dispatch, getState) => {
-    dispatch(contextSetLoading(true));
     const state = getState();
     const newValues = [...state.closing.day.values];
     newValues[index] = value;
@@ -105,7 +104,6 @@ export const closingUpdateValueDay = (value, index) => (dispatch, getState) => {
         )
         .then((res) => {
             dispatch(closingSetData(res.data.data));
-            dispatch(contextSetLoading(false));
         })
         .catch((err) => {
             console.log(err);

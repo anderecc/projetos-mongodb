@@ -12,7 +12,7 @@ const HeadApp = (props) => {
         if (token) {
             dispatch(authPersist(token));
         }
-    }, []);
+    }, [token]);
 
     return (
         <Head>

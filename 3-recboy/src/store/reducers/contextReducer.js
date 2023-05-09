@@ -9,7 +9,7 @@ import {
 
 const initialState = {
     loading: false,
-    date: '',
+    date: '00',
     weekDate: '',
     month: '',
     value: 0,

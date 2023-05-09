@@ -3,8 +3,9 @@ import Link from 'next/link';
 
 import styles from '../styles/header.module.sass';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/navigation';
 import { authLogOut } from '@/store/actions/authActions';
+import { deleteCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
     const auth = useSelector((state) => state.auth);
@@ -12,6 +13,11 @@ const Header = () => {
     const [menu, setMenu] = useState(false);
 
     const { push } = useRouter();
+
+    const handleLogOut = () => {
+        dispatch(authLogOut(push));
+        return deleteCookie('user-token');
+    };
 
     return (
         <header className={styles.container}>
@@ -47,7 +53,7 @@ const Header = () => {
                     <li>
                         <button
                             className={styles.btn_signOut}
-                            onClick={() => dispatch(authLogOut(push))}
+                            onClick={() => handleLogOut()}
                         >
                             <i className="fa-solid fa-user-xmark"></i>
                         </button>
