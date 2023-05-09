@@ -6,8 +6,6 @@ export async function middleware(req = NextRequest) {
     const token = await req.cookies.get('user-token')?.value;
     const header = await req.headers.get('authenticate');
 
-    const base_url = await req.nextUrl.origin;
-
     const appRoutePrivate =
         req.url.includes('/closing') ||
         req.url.includes('/dashboard') ||
