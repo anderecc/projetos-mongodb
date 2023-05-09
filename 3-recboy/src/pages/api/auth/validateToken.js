@@ -14,7 +14,7 @@ export default async function handler(req, res) {
             process.env.NEXT_PUBLIC_JWT,
             function (err, decoded) {
                 !err
-                    ? res.status(200).send({ valid: token, decoded })
+                    ? res.status(200).json({ valid: token, decoded })
                     : res.status(401).send({
                           error: 'Token está inválido. Faça seu login novamente.',
                       });

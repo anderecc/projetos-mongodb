@@ -6,11 +6,10 @@ export async function middleware(req = NextRequest) {
     const token = await req.cookies.get('user-token')?.value;
     const header = await req.headers.get('authenticate');
 
-    const apiRoutePrivate = await req.url.includes('/api/closing');
     const appRoutePrivate =
-        (await req.url.includes('/closing')) ||
-        (await req.url.includes('/dashboard')) ||
-        (await req.url.includes('/generatePDF'));
+        req.url.includes('/closing') ||
+        req.url.includes('/dashboard') ||
+        req.url.includes('/generatePDF');
 
     const verifyAuth = async (value) => {
         try {
@@ -26,19 +25,15 @@ export async function middleware(req = NextRequest) {
     const verifiedToken = token && (await verifyAuth(token));
     const verifiedHeader = header && (await verifyAuth(header));
 
-    if (req.url.includes('/auth') && !verifiedToken) {
+    if (req.url.includes('/api/auth')) {
         return NextResponse.next();
     }
 
-    if (req.url.includes('/auth') && verifiedToken) {
-        return NextResponse.rewrite(new URL('/dashboard', req.url));
+    if (req.url.includes('/api/closing') && verifiedHeader) {
+        return NextResponse.next();
     }
 
-    if (!verifiedToken && appRoutePrivate) {
-        return NextResponse.rewrite(new URL('/auth/login', req.url));
-    }
-
-    if (!verifiedHeader && apiRoutePrivate) {
+    if (req.url.includes('/api/closing') && !verifiedHeader) {
         return new NextResponse(
             JSON.stringify({
                 success: false,
@@ -48,15 +43,21 @@ export async function middleware(req = NextRequest) {
         );
     }
 
+    if (req.url.includes('/auth') && !verifiedToken) {
+        return NextResponse.next();
+    }
+
+    if (req.url.includes('/auth') && verifiedToken) {
+        return NextResponse.redirect(new URL('/dashboard', req.url));
+    }
+
+    if (appRoutePrivate && !verifiedToken) {
+        return NextResponse.redirect(new URL('/auth/login', req.url));
+    }
+
+    if (appRoutePrivate && verifiedToken) {
+        return NextResponse.next();
+    }
+
     return NextResponse.next();
 }
-
-export const config = {
-    matcher: [
-        '/dashboard',
-        '/closing/:path*',
-        '/generatePDF',
-        '/auth/:path*',
-        '/api/closing/:path*',
-    ],
-};
