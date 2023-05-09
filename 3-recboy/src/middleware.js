@@ -25,7 +25,7 @@ export async function middleware(req = NextRequest) {
     const verifiedToken = token && (await verifyAuth(token));
     const verifiedHeader = header && (await verifyAuth(header));
 
-    if (req.url.includes('/api/auth') || req.url.includes('/_next')) {
+    if (req.url.includes('/api/auth')) {
         return NextResponse.next();
     }
 
@@ -61,3 +61,7 @@ export async function middleware(req = NextRequest) {
 
     return NextResponse.next();
 }
+
+export const config = {
+    matcher: ['/api/:path*', '/dashboard', '/closing/:path*', '/generatePDF'],
+};
