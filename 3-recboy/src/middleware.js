@@ -6,7 +6,7 @@ export async function middleware(req = NextRequest) {
     const token = await req.cookies.get('user-token')?.value;
     const header = await req.headers.get('authenticate');
 
-    const base_url = req.nextUrl.origin;
+    const base_url = await req.nextUrl.origin;
 
     const appRoutePrivate =
         req.url.includes('/closing') ||
@@ -50,11 +50,13 @@ export async function middleware(req = NextRequest) {
     }
 
     if (req.url.includes('/auth') && verifiedToken) {
-        return NextResponse.redirect(`${base_url}/dashboard`);
+        const url = `${base_url}/dashboard`;
+        return NextResponse.redirect(url);
     }
 
     if (appRoutePrivate && !verifiedToken) {
-        return NextResponse.redirect(`${base_url}/auth/login`);
+        const url = `${base_url}/auth/login`;
+        return NextResponse.redirect(url);
     }
 
     if (appRoutePrivate && verifiedToken) {
