@@ -24,6 +24,12 @@ export async function middleware(req = NextRequest) {
     };
     const verifiedToken = token && (await verifyAuth(token));
     const verifiedHeader = header && (await verifyAuth(header));
+    if (
+        req.nextUrl.pathname.startsWith('/_next') ||
+        req.nextUrl.pathname.startsWith('/static')
+    ) {
+        return NextResponse.next();
+    }
 
     if (req.url.includes('/api/auth')) {
         return NextResponse.next();
@@ -48,11 +54,15 @@ export async function middleware(req = NextRequest) {
     }
 
     if (req.url.includes('/auth') && verifiedToken) {
-        return NextResponse.redirect('/dashboard');
+        // const url = req.nextUrl.clone();
+        // url.pathname = '/dashboard';
+        return NextResponse.redirect('https://recboy.vercel.app/dashboard');
     }
 
     if (appRoutePrivate && !verifiedToken) {
-        return NextResponse.redirect('/auth/login');
+        // const url = req.nextUrl.clone();
+        // url.pathname = '/auth/login';
+        return NextResponse.redirect('https://recboy.vercel.app/auth/login');
     }
 
     if (appRoutePrivate && verifiedToken) {
@@ -62,12 +72,12 @@ export async function middleware(req = NextRequest) {
     return NextResponse.next();
 }
 
-export const config = {
-    matcher: [
-        '/dashboard',
-        '/closing/:path*',
-        '/auth/:path*',
-        '/api/:path*',
-        '/generatePDF',
-    ],
-};
+// export const config = {
+//     matcher: [
+//         '/dashboard',
+//         '/closing/:path*',
+//         '/auth/:path*',
+//         '/api/:path*',
+//         '/generatePDF',
+//     ],
+// };

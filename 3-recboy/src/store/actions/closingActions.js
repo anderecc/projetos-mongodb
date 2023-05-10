@@ -178,7 +178,7 @@ export const closingDay = (push) => (dispatch, getState) => {
                     )
                     .then(async (res) => {
                         await dispatch(closingSetData(res.data.data));
-                        await dispatch(contextSetDate(''));
+                        await dispatch(contextSetDate('00'));
                         dispatch(contextSetLoading(false));
                         push('/dashboard');
                     })

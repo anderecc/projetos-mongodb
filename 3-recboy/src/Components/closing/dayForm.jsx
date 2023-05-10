@@ -41,6 +41,7 @@ const DayForm = (props) => {
                         value: +e.target.value,
                     })
                 }
+                autoFocus
             />
             <button className={styles.btn_add_value} onClick={props.submit}>
                 Adicionar

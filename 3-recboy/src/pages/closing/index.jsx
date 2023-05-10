@@ -58,6 +58,7 @@ const Closing = () => {
                                 onChange={(e) =>
                                     dispatch(contextSetDate(e.target.value))
                                 }
+                                onFocus={(e) => (e.target.value = '')}
                             />
                             /{month < 10 ? `0${month}` : month}/{year}
                         </span>

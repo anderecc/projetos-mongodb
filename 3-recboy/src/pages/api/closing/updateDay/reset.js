@@ -20,7 +20,7 @@ export default async function handler(req, res) {
                             data: {
                                 ...user.data,
                                 closingDay: {
-                                    date: '',
+                                    date: '00/00/0000',
                                     values: [],
                                     total: 0,
                                 },
