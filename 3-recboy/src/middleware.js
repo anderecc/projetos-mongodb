@@ -54,14 +54,10 @@ export async function middleware(req = NextRequest) {
     }
 
     if (req.url.includes('/auth') && verifiedToken) {
-        // const url = req.nextUrl.clone();
-        // url.pathname = '/dashboard';
         return NextResponse.redirect('https://recboy.vercel.app/dashboard');
     }
 
     if (appRoutePrivate && !verifiedToken) {
-        // const url = req.nextUrl.clone();
-        // url.pathname = '/auth/login';
         return NextResponse.redirect('https://recboy.vercel.app/auth/login');
     }
 
