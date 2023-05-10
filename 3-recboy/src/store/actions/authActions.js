@@ -29,7 +29,7 @@ export const authResetState = () => (dispatch) => {
     dispatch({ type: AUTH_RESET_STATE });
 };
 
-export const authLogin = (values, push) => async (dispatch, getState) => {
+export const authLogin = (values) => async (dispatch, getState) => {
     dispatch(contextSetLoading(true));
     axios
         .post('/api/auth/login', values)
@@ -47,7 +47,6 @@ export const authLogin = (values, push) => async (dispatch, getState) => {
 
                     dispatch(contextSetLoading(false));
                     window.location.reload();
-                    push('/dashboard');
                 })
                 .catch((err) => {
                     const state = getState();
@@ -73,7 +72,7 @@ export const authLogin = (values, push) => async (dispatch, getState) => {
     dispatch(contextSetLoading(false));
 };
 
-export const authRegister = (values, push) => async (dispatch, getState) => {
+export const authRegister = (values) => async (dispatch, getState) => {
     dispatch(contextSetLoading(true));
     await axios
         .post('/api/auth/register', values)
@@ -91,7 +90,6 @@ export const authRegister = (values, push) => async (dispatch, getState) => {
 
                     dispatch(contextSetLoading(false));
                     window.location.reload();
-                    push('/dashboard');
                 })
                 .catch((err) => {
                     const state = getState();
@@ -144,11 +142,11 @@ export const authPersist = (token) => async (dispatch, getState) => {
     }
 };
 
-export const authLogOut = (push) => async (dispatch) => {
+export const authLogOut = () => async (dispatch) => {
     await dispatch(authResetState());
     await dispatch(contextResetState());
     await dispatch(closingResetState());
     document.cookie =
         await 'user-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-    push('/auth/login');
+    window.location.reload();
 };
