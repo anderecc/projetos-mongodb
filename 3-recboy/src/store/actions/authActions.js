@@ -46,7 +46,7 @@ export const authLogin = (values, push) => async (dispatch, getState) => {
                     await dispatch(authSetUserToken(token));
 
                     dispatch(contextSetLoading(false));
-
+                    window.location.reload();
                     push('/dashboard');
                 })
                 .catch((err) => {
@@ -90,7 +90,7 @@ export const authRegister = (values, push) => async (dispatch, getState) => {
                     await dispatch(authSetUserToken(token));
 
                     dispatch(contextSetLoading(false));
-
+                    window.location.reload();
                     push('/dashboard');
                 })
                 .catch((err) => {
