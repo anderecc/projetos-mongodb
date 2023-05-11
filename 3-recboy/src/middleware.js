@@ -54,11 +54,11 @@ export async function middleware(req = NextRequest) {
     }
 
     if (req.url.includes('/auth') && verifiedToken) {
-        return NextResponse.redirect('https://recboy.vercel.app/dashboard');
+        return NextResponse.redirect(new URL('/dashboard', req.url));
     }
 
     if (appRoutePrivate && !verifiedToken) {
-        return NextResponse.redirect('https://recboy.vercel.app/auth/login');
+        return NextResponse.redirect(new URL('/auth/login', req.url));
     }
 
     if (appRoutePrivate && verifiedToken) {

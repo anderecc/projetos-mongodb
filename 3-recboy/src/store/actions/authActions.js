@@ -29,7 +29,7 @@ export const authResetState = () => (dispatch) => {
     dispatch({ type: AUTH_RESET_STATE });
 };
 
-export const authLogin = (values) => async (dispatch, getState) => {
+export const authLogin = (values, setCookie) => async (dispatch, getState) => {
     dispatch(contextSetLoading(true));
     axios
         .post('/api/auth/login', values)
@@ -40,7 +40,7 @@ export const authLogin = (values) => async (dispatch, getState) => {
                 .then(async (res) => {
                     const token = res.data.valid;
                     const { id, name, email } = res.data.decoded;
-                    document.cookie = `user-token=${token}`;
+                    setCookie('user-token', token);
 
                     await dispatch(authSetUser({ id, name, email }));
                     await dispatch(authSetUserToken(token));
@@ -72,49 +72,50 @@ export const authLogin = (values) => async (dispatch, getState) => {
     dispatch(contextSetLoading(false));
 };
 
-export const authRegister = (values) => async (dispatch, getState) => {
-    dispatch(contextSetLoading(true));
-    await axios
-        .post('/api/auth/register', values)
-        .then((res) => {
-            const { token } = res.data;
-            axios
-                .post('/api/auth/validateToken', { token })
-                .then(async (res) => {
-                    const token = res.data.valid;
-                    const { id, name, email } = res.data.decoded;
-                    document.cookie = `user-token=${token}`;
+export const authRegister =
+    (values, setCookie) => async (dispatch, getState) => {
+        dispatch(contextSetLoading(true));
+        await axios
+            .post('/api/auth/register', values)
+            .then((res) => {
+                const { token } = res.data;
+                axios
+                    .post('/api/auth/validateToken', { token })
+                    .then(async (res) => {
+                        const token = res.data.valid;
+                        const { id, name, email } = res.data.decoded;
+                        setCookie('user-token', token);
 
-                    await dispatch(authSetUser({ id, name, email }));
-                    await dispatch(authSetUserToken(token));
+                        await dispatch(authSetUser({ id, name, email }));
+                        await dispatch(authSetUserToken(token));
 
-                    dispatch(contextSetLoading(false));
-                    window.location.reload();
-                })
-                .catch((err) => {
-                    const state = getState();
-                    dispatch(contextSetLoading(false));
-                    dispatch(
-                        authSetErrors({
-                            ...state.auth.errors,
-                            submitRegister: err.response.data.error,
-                        })
-                    );
-                });
-        })
-        .catch((err) => {
-            const state = getState();
-            dispatch(contextSetLoading(false));
-            dispatch(
-                authSetErrors({
-                    ...state.auth.errors,
-                    submitRegister: err.response.data.error,
-                })
-            );
-        });
-};
+                        dispatch(contextSetLoading(false));
+                        window.location.reload();
+                    })
+                    .catch((err) => {
+                        const state = getState();
+                        dispatch(contextSetLoading(false));
+                        dispatch(
+                            authSetErrors({
+                                ...state.auth.errors,
+                                submitRegister: err.response.data.error,
+                            })
+                        );
+                    });
+            })
+            .catch((err) => {
+                const state = getState();
+                dispatch(contextSetLoading(false));
+                dispatch(
+                    authSetErrors({
+                        ...state.auth.errors,
+                        submitRegister: err.response.data.error,
+                    })
+                );
+            });
+    };
 
-export const authPersist = (token) => async (dispatch, getState) => {
+export const authPersist = (token, setCookie) => async (dispatch, getState) => {
     if (token) {
         dispatch(contextSetLoading(true));
         await axios
@@ -122,7 +123,7 @@ export const authPersist = (token) => async (dispatch, getState) => {
             .then((res) => {
                 const token = res.data.valid;
                 const { id, name, email } = res.data.decoded;
-                document.cookie = `user-token=${token}`;
+                setCookie('user-token', token);
                 dispatch(closingGetData(id, token));
                 dispatch(authSetUser({ id, name, email }));
                 dispatch(authSetUserToken(token));
@@ -146,7 +147,6 @@ export const authLogOut = () => async (dispatch) => {
     await dispatch(authResetState());
     await dispatch(contextResetState());
     await dispatch(closingResetState());
-    document.cookie =
-        await 'user-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+
     window.location.reload();
 };

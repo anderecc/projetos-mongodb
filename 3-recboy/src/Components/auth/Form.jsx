@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from '../../styles/auth/form.module.sass';
@@ -11,13 +11,12 @@ import {
     authSetValues,
 } from '@/store/actions/authActions';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { setCookie } from 'cookies-next';
 
 const Form = (props) => {
     const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-
-    const { push } = useRouter();
+    const [disabled, setDisabled] = useState(false);
 
     const handleChange = (type, e) => {
         let nameVerified;
@@ -131,6 +130,7 @@ const Form = (props) => {
                     verifyValue('email', auth.values.email) &&
                     verifyValue('password', auth.values.password)
                 ) {
+                    setDisabled(true);
                     dispatch(
                         authSetErrors({
                             ...auth.errors,
@@ -143,7 +143,7 @@ const Form = (props) => {
                                 email: auth.values.email,
                                 password: auth.values.password,
                             },
-                            push
+                            setCookie
                         )
                     );
                 } else {
@@ -154,6 +154,7 @@ const Form = (props) => {
                                 'Preencha corretamente todos os campos.',
                         })
                     );
+                    setDisabled(false);
                     return false;
                 }
 
@@ -168,6 +169,7 @@ const Form = (props) => {
                         auth.values.confirmPassword
                     )
                 ) {
+                    setDisabled(true);
                     dispatch(
                         authSetErrors({
                             ...auth.errors,
@@ -182,10 +184,11 @@ const Form = (props) => {
                                 password: auth.values.password,
                                 confirmPassword: auth.values.confirmPassword,
                             },
-                            push
+                            setCookie
                         )
                     );
                 } else {
+                    setDisabled(false);
                     dispatch(
                         authSetErrors({
                             ...auth.errors,
@@ -274,6 +277,7 @@ const Form = (props) => {
                         props.register ? 'submitRegister' : 'submitLogin'
                     )
                 }
+                disabled={disabled}
                 className={styles.btn_submit}
             >
                 {props.register ? 'Registrar' : 'Entrar'}

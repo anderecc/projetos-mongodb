@@ -13,7 +13,7 @@ export const contextSetLoading = (value) => (dispatch) => {
 
 export const contextSetDate = (value) => async (dispatch) => {
     let date = value;
-    if (date < 10) date = `0${date}`;
+    if (date <= 9) date = `0${date}`;
     else date = value;
 
     dispatch({ type: CONTEXT_SET_DATE, payload: date });

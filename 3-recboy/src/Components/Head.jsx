@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React, { useEffect } from 'react';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import { useDispatch } from 'react-redux';
 import { authPersist } from '@/store/actions/authActions';
 
@@ -10,7 +10,7 @@ const HeadApp = (props) => {
 
     useEffect(() => {
         if (token) {
-            dispatch(authPersist(token));
+            dispatch(authPersist(token, setCookie));
         }
     }, [token]);
 
