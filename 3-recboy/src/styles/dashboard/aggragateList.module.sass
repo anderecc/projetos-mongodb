@@ -8,12 +8,21 @@
     gap: 1rem
 
 .title
-    @include flex-items
-    width: 100%
-    justify-content: space-between
-    font-size: 1.2rem
-    font-weight: 600
     padding: .5rem 1rem
+    font-size: 1.1rem
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 1rem
+    div
+        @include flex-content
+        align-items: flex-start
+        flex-direction: column
+        gap: .5rem
+
+.btn_share
+    font-size: 1.7rem
+    color: darkgreen
 
 .summary
     @include flex-items
@@ -23,6 +32,17 @@
 
 .details
     width: 100%
+
+.week_container
+    font-size: 1rem
+    background-color: rgba(0, 0, 0, .1)
+    padding: .5rem
+    h3
+        display: flex
+        align-items: center
+        justify-content: space-around
+
+        font-size: 1.1rem
 
 .item_container
     @include  flex-content
@@ -48,6 +68,7 @@
     display: flex
     align-items: flex-start
     gap: 1rem
+    padding: 1rem .5rem
     flex-direction: column
     width: 100%
     div

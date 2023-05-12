@@ -21,7 +21,7 @@ const EditDay = () => {
     const dispatch = useDispatch();
     const { push } = useRouter();
 
-    const [dayValues, setDayValues] = useState({
+    const [dayValue, setDayValue] = useState({
         name: 'FAVARETTO',
         value: '',
     });
@@ -31,7 +31,7 @@ const EditDay = () => {
     }, [closing.dayToEdit.index]);
 
     const handleSubmit = () => {
-        dispatch(closingAddValueInDayToEdit(dayValues));
+        dispatch(closingAddValueInDayToEdit(dayValue));
     };
 
     return (
@@ -41,16 +41,23 @@ const EditDay = () => {
             {context.loading ? (
                 <Loading />
             ) : (
-                <Container>
-                    <h2>
-                        <span>Fechamento - </span>
-                        {closing.dayToEdit?.date}
-                    </h2>
+                <Container closing>
+                    <h3
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            fontSize: '1.4rem',
+                        }}
+                    >
+                        <span>Fechamento</span>
+                        <span>{closing.dayToEdit?.date}</span>
+                    </h3>
                     <section>
                         <DayForm
                             submit={handleSubmit}
-                            dayValues={dayValues}
-                            setDayValues={setDayValues}
+                            dayValue={dayValue}
+                            setDayValue={setDayValue}
                         />
                     </section>
                     <DayList

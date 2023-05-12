@@ -16,21 +16,23 @@ const AggregateList = () => {
 
     const verifyWeek = (week) => {
         return (
-            <h3 className={styles.title}>
-                <span>
-                    {`${week.values[0].date} - ${
-                        week.values[week.values.length - 1].date
-                    }`}
-                </span>
-                <span>Total semana: R$ {week.total.toFixed(2)}</span>
+            <summary className={`details ${styles.title}`}>
+                <div>
+                    <strong>
+                        {`${week.values[0].date} - ${
+                            week.values[week.values.length - 1].date
+                        }`}
+                    </strong>
+                    <strong>Total semana: R$ {week.total.toFixed(2)}</strong>
+                </div>
                 <Link
-                    style={{ color: 'darkGreen' }}
+                    className={styles.btn_share}
                     href={'/generatePDF'}
                     onClick={() => dispatch(contextSetWeekToPdf(week))}
                 >
                     <i className="fa-solid fa-share"></i>
                 </Link>
-            </h3>
+            </summary>
         );
     };
 
@@ -50,13 +52,13 @@ const AggregateList = () => {
         const values = week.values || [];
         return values.map((item, index) => {
             return (
-                <details key={index} className={styles.details}>
-                    <summary className={`details ${styles.summary}`}>
+                <div key={index} className={styles.week_container}>
+                    <h3>
                         <span>{item.date}</span>
                         <strong>Total: R$ {item.total.toFixed(2)}</strong>
-                    </summary>
+                    </h3>
                     <ul className={styles.item_container}>{renderDay(item)}</ul>
-                </details>
+                </div>
             );
         });
     };
@@ -66,9 +68,12 @@ const AggregateList = () => {
         return aggregate.map((item, index) => {
             if (item.values.length !== 0) {
                 return (
-                    <article key={index} className={styles.container}>
-                        {verifyWeek(item)}
-                        {renderWeek(item)}
+                    <article key={index}>
+                        <details className={styles.container}>
+                            {verifyWeek(item)}
+                            {renderWeek(item)}
+                        </details>
+                        <hr />
                     </article>
                 );
             }
@@ -119,6 +124,7 @@ const AggregateList = () => {
                         <strong>R$ {computeValue().toFixed(2)}</strong>
                     </p>
                 </div>
+                <hr />
             </article>
             {renderAggregate()}
         </section>

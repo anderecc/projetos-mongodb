@@ -1,12 +1,13 @@
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from '../../styles/closing/dayList.module.sass';
 
 import { closingCancelEditDay } from '@/store/actions/closingActions';
 
 const DayList = (props) => {
+    const closing = useSelector((state) => state.closing);
     const dispatch = useDispatch();
     const { push } = useRouter();
 
@@ -49,19 +50,23 @@ const DayList = (props) => {
 
     return (
         <section className={styles.container}>
-            <table className={styles.table_container}>
-                <thead>
-                    <tr>
-                        <th>Ponto</th>
-                        <th>Total</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>{renderItems()}</tbody>
-            </table>
-            <p className={styles.total}>
-                Total dia: R$ {props.day?.total?.toFixed(2)}
-            </p>
+            <article className={styles.content}>
+                <table className={styles.table_container}>
+                    <thead>
+                        <tr>
+                            <th>Ponto</th>
+                            <th>Total</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>{renderItems()}</tbody>
+                </table>
+                <p className={styles.total}>
+                    Total dia: R$ {props.day?.total?.toFixed(2)}
+                </p>
+            </article>
+            <p className="text-warning">{closing.errors?.date}</p>
+            <p className="text-warning">{closing.errors?.noValues}</p>
             <div className={styles.btn_container}>
                 <button
                     className={styles.btn_save}

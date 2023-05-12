@@ -14,8 +14,10 @@
     color: $text-white
 
 .total_week
-    font-size: 1.3rem
+    font-size: 1.2rem
     font-weight: 600
+    text-align: center
+    width: 100%
 
 .week_container
     width: 100%
@@ -26,12 +28,22 @@
     justify-content: space-between
     font-weight: 600
     font-size: 1.2rem
+    gap: .5rem
+
+.title_container
+    display: flex
+    align-items: flex-start
+    justify-content: center
+    flex-direction: column
+    & span:nth-child(2)
+        font-size: 1rem
 
 .btn_container
     @include flex
     gap: 1rem
     a, button
         font-size: 1.2rem
+        padding: .5rem
     button
         @include button
         color: $text-red
@@ -59,4 +71,6 @@
     a
         color: $bg-dark
         font-weight: 600
-        font-size: 1.2rem
+        font-size: 1rem
+        padding: .5rem 1rem
+        border-radius: 5px

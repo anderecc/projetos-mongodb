@@ -25,12 +25,15 @@
     cursor: pointer
     border-radius: 5px
     border: none
+
     background-color: transparent
     &:hover
         box-shadow: inset 5px 5px 5px 50px rgba(0, 0, 0, .5)
     &:active
         transform: scale(.95)
     &:disabled
+        background-color: #222
+        color: white
         box-shadow: inset 5px 5px 5px 50px rgba(0, 0, 0, .3)
 
 @mixin input

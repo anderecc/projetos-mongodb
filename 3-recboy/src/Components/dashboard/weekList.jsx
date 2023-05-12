@@ -28,11 +28,13 @@ const WeekList = () => {
     const renderItems = () => {
         return closing.week.values.map((item, index) => {
             return (
-                <article key={index} className={styles.week_container}>
+                <div key={index} className={styles.week_container}>
                     <details className={styles.details}>
                         <summary className={`details ${styles.summary}`}>
-                            <span>{item.date}</span>
-                            <span>Total: R$ {item.total.toFixed(2)}</span>
+                            <div className={styles.title_container}>
+                                <span>{item.date}</span>
+                                <span>Total: R$ {item.total.toFixed(2)}</span>
+                            </div>
                             <div className={styles.btn_container}>
                                 <Link
                                     href="/closing/editDay"
@@ -57,7 +59,7 @@ const WeekList = () => {
                             {renderValues(item.values)}
                         </ul>
                     </details>
-                </article>
+                </div>
             );
         });
     };
@@ -68,6 +70,7 @@ const WeekList = () => {
             <p className={styles.total_week}>
                 Total semana: R${closing.week.total.toFixed(2)}{' '}
             </p>
+            <p className="text-warning">{closing.errors?.weekNoValues}</p>
             <div className={styles.btn_end_container}>
                 <button
                     className={styles.btn_closing_week}

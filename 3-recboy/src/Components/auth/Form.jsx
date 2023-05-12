@@ -154,8 +154,7 @@ const Form = (props) => {
                                 'Preencha corretamente todos os campos.',
                         })
                     );
-                    setDisabled(false);
-                    return false;
+                    return setDisabled(false);
                 }
 
             case 'submitRegister':
@@ -188,7 +187,6 @@ const Form = (props) => {
                         )
                     );
                 } else {
-                    setDisabled(false);
                     dispatch(
                         authSetErrors({
                             ...auth.errors,
@@ -196,7 +194,7 @@ const Form = (props) => {
                                 'Preencha corretamente todos os campos.',
                         })
                     );
-                    return false;
+                    return setDisabled(false);
                 }
 
             default:

@@ -4,6 +4,7 @@ import {
     CLOSING_RESET_STATE,
     CLOSING_SET_DATA,
     CLOSING_SET_DAY_EDIT,
+    CLOSING_SET_ERRORS,
 } from '../types';
 import { contextSetDate, contextSetLoading } from './contextActions';
 
@@ -27,8 +28,8 @@ export const closingGetData = (id, token) => (dispatch) => {
         })
         .then((res) => {
             let { date } = res.data.data.closingDay;
-            date = date ? date.slice(1, 2) : '00';
-            dispatch(contextSetDate(date));
+
+            dispatch(contextSetDate(date.slice(0, 2)));
             dispatch(closingSetData(res.data.data));
             dispatch(contextSetLoading(false));
         })
@@ -41,46 +42,63 @@ export const closingGetData = (id, token) => (dispatch) => {
 export const closingSetValueDay = (value, date) => (dispatch, getState) => {
     dispatch(contextSetLoading(true));
     const state = getState();
+    const dateVerified = date.slice(0, 2);
     const newValues = [...state.closing.day.values];
-    if (newValues.length === 0) {
-        newValues.push({ ...value });
-    } else if (newValues.some((item) => item.name === value.name)) {
-        newValues.forEach((item, index) => {
-            if (item.name === value.name) {
-                const newItem = {
-                    name: item.name,
-                    value: +item.value + +value.value,
-                };
-                newValues[index] = newItem;
-            }
-            return newValues;
-        });
+    if (dateVerified === '00') {
+        dispatch(contextSetLoading(false));
+        dispatch(
+            closingSetErrors({
+                ...state.closing.erros,
+                date: 'Informe uma data primeiro',
+            })
+        );
     } else {
-        newValues.push(value);
-    }
-    const total = newValues.reduce((acc, crr) => acc + +crr.value, 0);
-    axios
-        .put(
-            `/api/closing/updateDay/${state.auth.user.id}`,
-            {
-                date,
-                values: newValues,
-                total,
-            },
-            {
-                headers: {
-                    authenticate: state.auth.userToken,
+        dispatch(
+            closingSetErrors({
+                ...state.closing.erros,
+                date: '',
+            })
+        );
+        if (newValues.length === 0) {
+            newValues.push({ ...value });
+        } else if (newValues.some((item) => item.name === value.name)) {
+            newValues.forEach((item, index) => {
+                if (item.name === value.name) {
+                    const newItem = {
+                        name: item.name,
+                        value: +item.value + +value.value,
+                    };
+                    newValues[index] = newItem;
+                }
+                return newValues;
+            });
+        } else {
+            newValues.push(value);
+        }
+        const total = newValues.reduce((acc, crr) => acc + +crr.value, 0);
+        axios
+            .put(
+                `/api/closing/updateDay/${state.auth.user.id}`,
+                {
+                    date,
+                    values: newValues,
+                    total,
                 },
-            }
-        )
-        .then((res) => {
-            dispatch(closingSetData(res.data.data));
-            dispatch(contextSetLoading(false));
-        })
-        .catch((err) => {
-            console.log(err);
-            dispatch(contextSetLoading(false));
-        });
+                {
+                    headers: {
+                        authenticate: state.auth.userToken,
+                    },
+                }
+            )
+            .then((res) => {
+                dispatch(closingSetData(res.data.data));
+                dispatch(contextSetLoading(false));
+            })
+            .catch((err) => {
+                console.log(err);
+                dispatch(contextSetLoading(false));
+            });
+    }
 };
 
 export const closingUpdateValueDay = (value, index) => (dispatch, getState) => {
@@ -145,7 +163,14 @@ export const closingDay = (push) => (dispatch, getState) => {
     dispatch(contextSetLoading(true));
     const state = getState();
 
-    if (state.closing.day.values.length !== 0) {
+    if (state.closing.day.values.length !== 0 && state.context.date !== '00') {
+        dispatch(
+            closingSetErrors({
+                ...state.closing.errors,
+                noValues: '',
+                date: '',
+            })
+        );
         const newValues = [...state.closing.week.values];
         newValues.push(state.closing.day);
         const total = newValues.reduce((acc, crr) => acc + crr.total, 0);
@@ -191,6 +216,35 @@ export const closingDay = (push) => (dispatch, getState) => {
                 console.log(err);
                 dispatch(contextSetLoading(false));
             });
+    } else {
+        dispatch(contextSetLoading(false));
+        if (state.context.date === '00') {
+            return dispatch(
+                closingSetErrors({
+                    ...state.closing.errors,
+                    date: 'Informe o dia.',
+                })
+            );
+        } else if (state.closing.day.values.length === 0) {
+            return dispatch(
+                closingSetErrors({
+                    ...state.closing.errors,
+                    noValues:
+                        'Fechamento diário deve conter pelo menos um valor.',
+                })
+            );
+        } else if (state.closing.day.values.length !== 0) {
+            return dispatch(
+                closingSetErrors({
+                    ...state.closing.errors,
+                    noValues: '',
+                })
+            );
+        } else if (state.context.date !== '00') {
+            return dispatch(
+                closingSetErrors({ ...state.closing.errors, date: '' })
+            );
+        }
     }
 };
 
@@ -202,45 +256,62 @@ export const closingWeek = () => (dispatch, getState) => {
     newValues.unshift(state.closing.week);
     const total = newValues.reduce((acc, crr) => acc + crr.total, 0);
 
-    axios
-        .put(
-            `/api/closing/updateAggregate/${state.auth.user.id}`,
-            {
-                values: newValues,
-                total,
-            },
-            {
-                headers: {
-                    authenticate: state.auth.userToken,
+    if (state.closing.week.values.length !== 0) {
+        dispatch(
+            closingSetErrors({
+                ...state.closing.errors,
+                weekNoValues: '',
+            })
+        );
+        axios
+            .put(
+                `/api/closing/updateAggregate/${state.auth.user.id}`,
+                {
+                    values: newValues,
+                    total,
                 },
-            }
-        )
-        .then(() => {
-            axios
-                .post(
-                    '/api/closing/updateWeek/reset',
-                    {
-                        id: state.auth.user.id,
+                {
+                    headers: {
+                        authenticate: state.auth.userToken,
                     },
-                    {
-                        headers: {
-                            authenticate: state.auth.userToken,
+                }
+            )
+            .then(() => {
+                axios
+                    .post(
+                        '/api/closing/updateWeek/reset',
+                        {
+                            id: state.auth.user.id,
                         },
-                    }
-                )
-                .then((res) => {
-                    dispatch(closingSetData(res.data.data));
-                    dispatch(contextSetLoading(false));
-                })
-                .catch((err) => {
-                    console.log(err);
-                    dispatch(contextSetLoading(false));
-                });
-        })
-        .catch((err) => {
-            console.log(err);
-            dispatch(contextSetLoading(false));
-        });
+                        {
+                            headers: {
+                                authenticate: state.auth.userToken,
+                            },
+                        }
+                    )
+                    .then((res) => {
+                        dispatch(closingSetData(res.data.data));
+                        dispatch(contextSetLoading(false));
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        dispatch(contextSetLoading(false));
+                    });
+            })
+            .catch((err) => {
+                console.log(err);
+                dispatch(contextSetLoading(false));
+            });
+    } else {
+        dispatch(contextSetLoading(false));
+        dispatch(
+            closingSetErrors({
+                ...state.closing.errors,
+                weekNoValues:
+                    'Fechamento da semana deve conter pelo menos um dia.',
+            })
+        );
+    }
 };
 
 export const closingDeleteWeek = (index) => (dispatch, getState) => {
@@ -374,4 +445,8 @@ export const closingAddValueInDayToEdit = (value) => (dispatch, getState) => {
 
 export const closingResetState = () => (dispatch) => {
     dispatch({ type: CLOSING_RESET_STATE });
+};
+
+export const closingSetErrors = (values) => (dispatch) => {
+    dispatch({ type: CLOSING_SET_ERRORS, payload: values });
 };

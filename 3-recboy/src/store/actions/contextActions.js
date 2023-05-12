@@ -11,11 +11,7 @@ export const contextSetLoading = (value) => (dispatch) => {
     dispatch({ type: CONTEXT_SET_LOADING, payload: value });
 };
 
-export const contextSetDate = (value) => async (dispatch) => {
-    let date = value;
-    if (date <= 9) date = `0${date}`;
-    else date = value;
-
+export const contextSetDate = (date) => async (dispatch) => {
     dispatch({ type: CONTEXT_SET_DATE, payload: date });
 };
 

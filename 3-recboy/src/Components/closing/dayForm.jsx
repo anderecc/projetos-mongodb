@@ -7,10 +7,10 @@ const DayForm = (props) => {
         <form onSubmit={(e) => e.preventDefault()} className={styles.container}>
             <select
                 className={styles.select}
-                value={props.dayValues.name}
+                value={props.dayValue.name}
                 onChange={(e) =>
-                    props.setDayValues({
-                        ...props.dayValues,
+                    props.setDayValue({
+                        ...props.dayValue,
                         name: e.target.value,
                     })
                 }
@@ -34,10 +34,10 @@ const DayForm = (props) => {
             <input
                 className={styles.input}
                 type="number"
-                value={props.dayValues.value}
+                value={props.dayValue.value}
                 onChange={(e) =>
-                    props.setDayValues({
-                        ...props.dayValues,
+                    props.setDayValue({
+                        ...props.dayValue,
                         value: +e.target.value,
                     })
                 }

@@ -32,6 +32,12 @@ function getDate() {
     ];
     day = dayNames[day];
 
+    if (month < 10) {
+        month = `0${month}`;
+    } else {
+        month;
+    }
+
     return { day, weekDate, date, month, monthName, year };
 }
 
