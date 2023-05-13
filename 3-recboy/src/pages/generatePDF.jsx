@@ -28,7 +28,6 @@ const GeneratePDF = () => {
 
         const result = allValues.reduce((acc, crr) => {
             const index = acc.findIndex((item) => item.name === crr.name);
-            console.log(acc.findIndex((item) => item.name === crr.name));
 
             if (index === -1) {
                 acc.push({ name: crr.name, value: crr.value });
