@@ -69,13 +69,12 @@ export const authLogin = (values, setCookie) => async (dispatch, getState) => {
                 })
             );
         });
-    dispatch(contextSetLoading(false));
 };
 
 export const authRegister =
     (values, setCookie) => async (dispatch, getState) => {
         dispatch(contextSetLoading(true));
-        await axios
+        axios
             .post('/api/auth/register', values)
             .then((res) => {
                 const { token } = res.data;
@@ -118,7 +117,7 @@ export const authRegister =
 export const authPersist = (token, setCookie) => async (dispatch, getState) => {
     if (token) {
         dispatch(contextSetLoading(true));
-        await axios
+        axios
             .post('/api/auth/validateToken', { token })
             .then((res) => {
                 const token = res.data.valid;

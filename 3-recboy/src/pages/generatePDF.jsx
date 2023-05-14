@@ -11,6 +11,7 @@ import Footer from '@/Components/Footer';
 import HeadApp from '@/Components/Head';
 import Header from '@/Components/Header';
 import Loading from '@/Components/Loading';
+import Link from 'next/link';
 
 const GeneratePDF = () => {
     const { loading, weekToPdf } = useSelector((state) => state.context);
@@ -132,12 +133,17 @@ const GeneratePDF = () => {
             ) : (
                 <Container>
                     <div id="generatePDFContainer">{renderWeek()}</div>
-                    <button
-                        className={styles.btn_download}
-                        onClick={() => downloadPDF()}
-                    >
-                        Baixar/Compartilhar
-                    </button>
+                    <div>
+                        <button
+                            className={styles.btn_download}
+                            onClick={() => downloadPDF()}
+                        >
+                            Baixar/Compartilhar
+                        </button>
+                        <Link className={styles.link_back} href={'/dashboard'}>
+                            Voltar
+                        </Link>
+                    </div>
                 </Container>
             )}
             <Footer />
