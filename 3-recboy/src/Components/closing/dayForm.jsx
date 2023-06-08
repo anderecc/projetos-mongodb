@@ -30,6 +30,7 @@ const DayForm = (props) => {
                 <option value="LAFRUTA">La fruta</option>
                 <option value="BOCAO">Bocão</option>
                 <option value="STEICY">Steicy</option>
+                <option value="BAGNARA">Bagnara</option>
             </select>
             <input
                 className={styles.input}
