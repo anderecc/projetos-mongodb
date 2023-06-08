@@ -1,7 +1,5 @@
 import Container from '@/Components/Container';
-import Footer from '@/Components/Footer';
-import Head from '@/Components/Head';
-import Header from '@/Components/Header';
+import Layout from '@/Components/Layout';
 import Loading from '@/Components/Loading';
 import DayForm from '@/Components/closing/dayForm';
 import DayList from '@/Components/closing/dayList';
@@ -35,9 +33,10 @@ const EditDay = () => {
     };
 
     return (
-        <>
-            <Head />
-            <Header />
+        <Layout
+            title={`Editar dia ${closing.dayToEdit?.date}`}
+            loading={context.loading}
+        >
             {context.loading ? (
                 <Loading />
             ) : (
@@ -69,8 +68,7 @@ const EditDay = () => {
                     />
                 </Container>
             )}
-            <Footer />
-        </>
+        </Layout>
     );
 };
 

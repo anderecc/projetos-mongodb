@@ -7,11 +7,10 @@ import downloadPDF from '@/functions/downloadPDF';
 import styles from '../styles/generatePDF/generatePDF.module.sass';
 
 import Container from '@/Components/Container';
-import Footer from '@/Components/Footer';
-import HeadApp from '@/Components/Head';
-import Header from '@/Components/Header';
 import Loading from '@/Components/Loading';
 import Link from 'next/link';
+import Layout from '@/Components/Layout';
+import computeTotalPoints from '@/functions/computeTotalPoints';
 
 const GeneratePDF = () => {
     const { loading, weekToPdf } = useSelector((state) => state.context);
@@ -21,27 +20,8 @@ const GeneratePDF = () => {
         if (weekToPdf.values.length === 0) push('/dashboard');
     }, []);
 
-    const computeTotalPoint = (values) => {
-        const allValues = [];
-        values.forEach((item) => {
-            item.values.forEach((item) => allValues.push({ ...item }));
-        });
-
-        const result = allValues.reduce((acc, crr) => {
-            const index = acc.findIndex((item) => item.name === crr.name);
-
-            if (index === -1) {
-                acc.push({ name: crr.name, value: crr.value });
-            } else {
-                acc[index] = {
-                    name: crr.name,
-                    value: crr.value + +acc[index].value,
-                };
-            }
-
-            return acc;
-        }, []);
-
+    const renderTotalPoints = (values) => {
+        const result = computeTotalPoints(values);
         return result?.map((item, index) => {
             return (
                 <li key={index}>
@@ -116,7 +96,7 @@ const GeneratePDF = () => {
                 >
                     {renderDays(weekToPdf.values)}
                 </div>
-                <ul>{computeTotalPoint(weekToPdf.values)}</ul>
+                <ul>{renderTotalPoints(weekToPdf.values)}</ul>
                 <h3>
                     <span>Total semana: R${weekToPdf.total.toFixed(2)}</span>
                 </h3>
@@ -125,9 +105,7 @@ const GeneratePDF = () => {
     };
 
     return (
-        <>
-            <HeadApp title="Baixar semana - recboy" />
-            <Header />
+        <Layout title="Fechamento da semana">
             {loading ? (
                 <Loading />
             ) : (
@@ -146,8 +124,7 @@ const GeneratePDF = () => {
                     </div>
                 </Container>
             )}
-            <Footer />
-        </>
+        </Layout>
     );
 };
 

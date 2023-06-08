@@ -3,20 +3,19 @@ import { useSelector } from 'react-redux';
 import styles from '../styles/home.module.sass';
 
 import Container from '@/Components/Container';
-import Footer from '@/Components/Footer';
-import Head from '@/Components/Head';
-import Header from '@/Components/Header';
 import Loading from '@/Components/Loading';
 import Link from 'next/link';
+import Layout from '@/Components/Layout';
 
 export default function Home() {
     const context = useSelector((state) => state.context);
     const auth = useSelector((state) => state.auth);
 
     return (
-        <>
-            <Head title="Home - recboy" />
-            <Header />
+        <Layout
+            title="RecBoy - Entre ou cadastre uma conta"
+            loading={context.loading}
+        >
             {context.loading ? (
                 <Loading />
             ) : (
@@ -39,7 +38,6 @@ export default function Home() {
                     </section>
                 </Container>
             )}
-            <Footer loading={context.loading} />
-        </>
+        </Layout>
     );
 }

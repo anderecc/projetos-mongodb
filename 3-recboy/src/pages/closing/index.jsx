@@ -12,14 +12,12 @@ import {
 import { contextSetDate } from '@/store/actions/contextActions';
 
 import Container from '@/Components/Container';
-import Footer from '@/Components/Footer';
-import Head from '@/Components/Head';
-import Header from '@/Components/Header';
 import Loading from '@/Components/Loading';
 import getDate from '@/functions/getDate';
 import DayList from '@/Components/closing/dayList';
 import DayForm from '@/Components/closing/dayForm';
 import verifyEmpty from '@/functions/verifyEmpty';
+import Layout from '@/Components/Layout';
 
 const Closing = () => {
     const context = useSelector((state) => state.context);
@@ -55,9 +53,10 @@ const Closing = () => {
     };
 
     return (
-        <>
-            <Head title="Fechamento - recboy" />
-            <Header />
+        <Layout
+            title={`Fechamento dia ${context.date}`}
+            loading={context.loading}
+        >
             {context.loading ? (
                 <Loading />
             ) : (
@@ -96,8 +95,7 @@ const Closing = () => {
                     />
                 </Container>
             )}
-            <Footer loading={context.loading} />
-        </>
+        </Layout>
     );
 };
 

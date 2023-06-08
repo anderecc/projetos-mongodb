@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useState } from 'react';
 import Link from 'next/link';
 
@@ -39,6 +40,14 @@ const Header = () => {
                     <li>
                         <Link href={'/closing'}>Fechamento</Link>
                     </li>
+                    {auth.user.id &&
+                    process.env.NEXT_PUBLIC_ADMINS.includes(auth.user.id) ? (
+                        <li>
+                            <Link href="/admin">Admin</Link>
+                        </li>
+                    ) : (
+                        false
+                    )}
 
                     <button
                         className={styles.btn_close}
