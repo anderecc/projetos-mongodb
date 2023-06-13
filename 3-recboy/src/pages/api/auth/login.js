@@ -30,9 +30,8 @@ export default async function handler(req, res) {
                     });
                 }
             })
-            .catch((err) =>
+            .catch(() =>
                 res.status(404).send({
-                    err,
                     error: 'Ocorreu algum erro ao tentar efetuar seu login.',
                 })
             );

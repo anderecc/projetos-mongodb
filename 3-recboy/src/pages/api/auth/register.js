@@ -86,17 +86,15 @@ export default async function handler(req, res) {
                                 token,
                             });
                         })
-                        .catch((err) =>
+                        .catch(() =>
                             res.status(400).send({
-                                err,
                                 error: 'Ocorreu algum erro ao tentar efetuar seu registro.',
                             })
                         );
                 }
             })
-            .catch((err) =>
+            .catch(() =>
                 res.status(404).send({
-                    err,
                     error: 'Ocorreu algum erro ao tentar efetuar seu registro.',
                 })
             );
