@@ -13,7 +13,7 @@ export default function Home() {
 
     return (
         <Layout
-            title="RecBoy - Entre ou cadastre uma conta"
+            title="RECBOY - Entre ou cadastre uma conta"
             loading={context.loading}
         >
             {context.loading ? (
