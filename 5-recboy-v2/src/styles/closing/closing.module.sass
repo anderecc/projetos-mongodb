@@ -1,0 +1,19 @@
+@import '../_mixins'
+@import '../_variables'
+
+.title
+    @include flex-items
+    justify-content: space-between
+    text-align: center
+    flex-wrap: wrap
+    font-size: 1.4rem
+    span
+        @include flex
+
+.input
+    @include input
+    max-width: 75px
+    font-size: 1.1rem
+    padding: .3rem .5rem
+    font-weight: bold
+    text-align: center

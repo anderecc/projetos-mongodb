@@ -11,8 +11,6 @@ import {
 } from '@/store/actions/closingActions';
 import { contextSetDate } from '@/store/actions/contextActions';
 
-import Container from '@/Components/Container';
-import Loading from '@/Components/Loading';
 import getDate from '@/functions/getDate';
 import DayList from '@/Components/closing/dayList';
 import DayForm from '@/Components/closing/dayForm';
@@ -56,45 +54,40 @@ const Closing = () => {
         <Layout
             title={`Fechamento dia ${context.date}`}
             loading={context.loading}
+            closing
         >
-            {context.loading ? (
-                <Loading />
-            ) : (
-                <Container closing>
-                    <h2 className={styles.title}>
-                        Fechamento
-                        <span>
-                            <input
-                                className={styles.input}
-                                type="number"
-                                value={context.date}
-                                onChange={(e) =>
-                                    dispatch(contextSetDate(e.target.value))
-                                }
-                                placeholder="Coloque o dia"
-                                onFocus={() => dispatch(contextSetDate(''))}
-                                onBlur={(e) => handleBlur(e.target.value)}
-                                min={0}
-                                max={31}
-                            />
-                            /{month}/{year}
-                        </span>
-                    </h2>
-                    <section>
-                        <DayForm
-                            submit={handleSubmit}
-                            dayValue={dayValue}
-                            setDayValue={setDayValue}
-                        />
-                    </section>
-                    <DayList
-                        day={closing.day}
-                        change={closingUpdateValueDay}
-                        delete={closingDeleteValueDay}
-                        submit={closingDay}
+            <h2 className={styles.title}>
+                Fechamento
+                <span>
+                    <input
+                        className={styles.input}
+                        type="number"
+                        value={context.date}
+                        onChange={(e) =>
+                            dispatch(contextSetDate(e.target.value))
+                        }
+                        placeholder="Coloque o dia"
+                        onFocus={() => dispatch(contextSetDate(''))}
+                        onBlur={(e) => handleBlur(e.target.value)}
+                        min={0}
+                        max={31}
                     />
-                </Container>
-            )}
+                    /{month}/{year}
+                </span>
+            </h2>
+            <section>
+                <DayForm
+                    submit={handleSubmit}
+                    dayValue={dayValue}
+                    setDayValue={setDayValue}
+                />
+            </section>
+            <DayList
+                day={closing.day}
+                change={closingUpdateValueDay}
+                delete={closingDeleteValueDay}
+                submit={closingDay}
+            />
         </Layout>
     );
 };

@@ -64,20 +64,16 @@ const Header = () => {
                             className={styles.btn_signOut}
                             onClick={() => handleLogOut()}
                         >
-                            <i className="fa-solid fa-user-xmark"></i>
+                            Sair
                         </button>
                     </li>
                 ) : (
                     <>
                         <li>
-                            <Link href={'/auth/login'}>
-                                <i className="fa-solid fa-user"></i>
-                            </Link>
+                            <Link href={'/auth/login'}>Entrar</Link>
                         </li>
                         <li>
-                            <Link href={'/auth/register'}>
-                                <i className="fa-solid fa-user-plus"></i>
-                            </Link>
+                            <Link href={'/auth/register'}>Cadastrar</Link>
                         </li>
                     </>
                 )}

@@ -1,0 +1,96 @@
+@import './_mixins'
+@import './_variables'
+// height: 75px
+.container
+    background-color: $bg-dark
+
+.fixed
+    height: 75px
+    position: relative
+    z-index: 50 !important
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 0 1rem
+    background-color: $bg-dark
+    width: 100%
+
+.nav_container
+    transition: transform .5s
+    position: absolute
+    top: 75px
+    transform: translateY(-100vh)
+    left: 0
+    width: 100%
+    background-color: rgba(0, 0, 0, .9)
+    z-index: 45 !important
+    ul
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        gap: 1rem
+        padding: 1rem 0
+        li
+            a
+                @include transition
+                color: $white
+                position: relative
+                padding: 5px 10px
+                &::after
+                    @include transition
+                    content: ''
+                    width: 0
+                    border-bottom: 2px solid $white
+                    position: absolute
+                    left: 0
+                    bottom: 0
+                &:hover
+                    color: $green
+                    &::after
+                        width: 100%
+
+.nav_container.show
+    transform: translateY(0)
+
+.btn_menu
+    @include transition
+    background-color: transparent
+    font-size: 2rem
+    border: none
+    color: $white
+    cursor: pointer
+    &:hover
+        color: $blue
+.btn_menu.close
+    color: $red
+    &:hover
+        color: $white
+
+.signOut_container
+    display: flex
+    gap: 2rem
+
+.btn_signOut
+    @include transition
+    font-size: 1rem
+    cursor: pointer
+    color: $red
+    border: none
+    background-color: transparent
+    &:hover
+        color: $white
+
+.auth_container
+    display: flex
+    gap: 1rem
+    z-index: 50 !important
+    background-color: $bg-dark
+
+    li
+        a
+            @include transition
+            color: $white
+            font-size: 1rem
+            &:hover
+                color: $green

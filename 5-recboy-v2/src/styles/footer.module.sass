@@ -1,0 +1,23 @@
+@import './_mixins'
+@import './_variables'
+
+.container
+    @include flex
+    height: 50px
+    background-color: $bg-dark
+    color: $text-white
+
+    p
+        font-family: 'Lato', sans-serif
+        a
+            color: $text-dark
+            @include transition
+
+            &:hover
+                color: $text-white-hover
+
+.container.loading
+    position: absolute
+    left: 0
+    right: 0
+    bottom: 0

@@ -1,0 +1,47 @@
+@import '../_mixins'
+@import '../_variables'
+
+.container
+    display: grid
+    grid-template-columns: 1fr
+    align-items: center
+    justify-content: center
+    gap: 2rem
+    label
+        position: relative
+        span
+            position: absolute
+            left: 1%
+            top: -65%
+            font-size: 1.2rem
+            color: $text-white
+        input
+            @include transition
+            width: 100%
+            outline: none
+            padding: 5px 10px
+            border-radius: 5px
+            font-size: 1rem
+            border: 2px solid transparent
+            background-color: rgba(0, 0, 0, .5)
+            color: $text-primary
+            &:focus
+                background-color: rgba(0, 0, 0, .3)
+
+                &:valid
+                    border-color: $green
+                &:invalid
+                    border-color: $red
+
+.btn_submit
+    @include transition
+    border: none
+    outline: none
+    padding: 5px 10px
+    border-radius: 5px
+    font-size: 1rem
+    background-color: $dark-blue
+    color: $white
+    cursor: pointer
+    &:hover
+        background-color: $dark-green

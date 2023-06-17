@@ -1,0 +1,93 @@
+@import '../_mixins'
+@import '../_variables'
+
+.container
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    width: 100%
+    min-height: 500px
+    h3
+        font-size: 1.5rem
+        text-align: center
+        width: 100%
+
+.title
+    padding: .5rem 1rem
+    font-size: 1.1rem
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 1rem
+    div
+        @include flex-content
+        align-items: flex-start
+        flex-direction: column
+        gap: .5rem
+
+.btn_share
+    font-size: 1.7rem
+    color: darkgreen
+
+.summary
+    @include flex-items
+    justify-content: space-between
+    font-weight: 600
+    font-size: 1rem
+
+.details
+    width: 100%
+
+.week_container
+    font-size: 1rem
+    background-color: rgba(0, 0, 0, .1)
+    padding: .5rem
+    h3
+        display: flex
+        align-items: center
+        justify-content: space-around
+
+        font-size: 1.1rem
+
+.item_container
+    @include  flex-content
+    padding: 1rem 0
+    align-items: flex-start
+    gap: .5rem
+    font-size: 1rem
+    font-weight: 500
+    flex-direction: column
+
+.item_content
+    display: flex
+    flex-direction: column
+    width: 100%
+    justify-content: space-between
+
+.input
+    @include input
+    padding: .5rem
+    width: 100px
+
+.compute_container
+    display: flex
+    align-items: flex-start
+    gap: 1rem
+    padding: 1rem 0
+    flex-direction: column
+    width: 100%
+    font-size: 1rem
+    div
+        @include flex-items
+        justify-content: space-between
+        width: 100%
+        div
+            @include flex
+            flex-direction: column
+            font-weight: 600
+            input
+                text-align: center
+    p
+        font-size: 1rem
+        text-align: center
+        width: 100%

@@ -1,0 +1,27 @@
+@import '../_mixins'
+@import '../_variables'
+
+.container
+    display: grid
+    align-items: center
+    justify-content: space-between
+    grid-template-columns: 1fr
+    grid-template-rows: 1fr 3fr 1fr
+    height: 100%
+    gap: 3rem
+    .title
+        font-size: 2rem
+        grid-row: 1 / 2
+        color: $text-white
+    form
+        grid-row: 2 / 3
+    .link
+        display: flex
+        gap: .5rem
+        color: $text-primary
+        grid-row: 3 / 4
+        a
+            @include transition
+            color: $green
+            &:hover
+                color: black

@@ -1,0 +1,21 @@
+@import './_mixins'
+@import './_variables'
+
+.container
+    @include flex
+    flex-direction: column
+    gap: 2rem
+    text-align: center
+    font-size: 1.5rem
+
+.links_container
+    @include flex-items
+    justify-content: space-evenly
+    font-weight: 600
+    width: 100%
+    font-size: 1.2rem
+    a
+        @include transition
+        color: $text-blue
+        &:hover
+            color: $text-blue-hover

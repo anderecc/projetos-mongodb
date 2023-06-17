@@ -1,0 +1,18 @@
+@import '../_variables'
+@import '../_mixins'
+
+.btn_download
+    @include button
+    background-color: $bg-green
+    padding: .5rem 1rem
+    color: $text-white
+    font-weight: 600
+    margin-top: 1rem
+    margin-right: 1rem
+
+.link_back
+    @include transition
+    font-weight: bold
+    color: $text-blue
+    &:hover
+        color: $text-blue-hover

@@ -1,0 +1,90 @@
+@import '../_mixins'
+@import '../_variables'
+
+.container
+    display: flex
+    align-items: flex-start
+    gap: 1rem
+    flex-direction: column
+    width: 100%
+    min-height: 500px
+    h3
+        width: 100%
+        font-size: 1.5rem
+        text-align: center
+
+.btn_closing_week
+    @include button
+    padding: 5px 10px
+    font-size: 1rem
+    background-color: $bg-green
+    color: $text-white
+
+.total_week
+    font-size: 1.2rem
+    font-weight: 600
+    text-align: start
+    width: 100%
+
+.week_container
+    width: 100%
+    font-size: 1rem
+
+.summary
+    @include flex-items
+    justify-content: space-between
+    font-weight: 600
+    font-size: 1.2rem
+    gap: .5rem
+
+.title_container
+    display: flex
+    align-items: flex-start
+    justify-content: center
+    flex-direction: column
+    & span:nth-child(2)
+        font-size: 1rem
+
+.btn_container
+    @include flex
+    gap: 1rem
+    a, button
+        font-size: 1.2rem
+        padding: .5rem
+    button
+        @include button
+        color: $text-red
+    a
+        color: $text-blue
+
+.item_container
+    @include  flex-content
+    padding: 1rem 0
+    align-items: flex-start
+    gap: .5rem
+    font-size: 1rem
+    font-weight: 500
+    flex-direction: column
+
+.item_content
+    display: flex
+    flex-direction: column
+    width: 100%
+    justify-content: space-between
+
+.btn_end_container
+    width: 100%
+    display: flex
+    justify-content: space-between
+    gap: 1rem
+    button
+        font-size: 1rem
+    a
+        color: $bg-dark
+        font-weight: 600
+        font-size: 1rem
+        padding: .5rem 1rem
+        border-radius: 5px
+
+.items_content
+    width: 100%

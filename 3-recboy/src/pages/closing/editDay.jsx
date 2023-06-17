@@ -1,6 +1,4 @@
-import Container from '@/Components/Container';
 import Layout from '@/Components/Layout';
-import Loading from '@/Components/Loading';
 import DayForm from '@/Components/closing/dayForm';
 import DayList from '@/Components/closing/dayList';
 import {
@@ -36,38 +34,33 @@ const EditDay = () => {
         <Layout
             title={`Editar dia ${closing.dayToEdit?.date}`}
             loading={context.loading}
+            closing
         >
-            {context.loading ? (
-                <Loading />
-            ) : (
-                <Container closing>
-                    <h3
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            fontSize: '1.4rem',
-                        }}
-                    >
-                        <span>Fechamento</span>
-                        <span>{closing.dayToEdit?.date}</span>
-                    </h3>
-                    <section>
-                        <DayForm
-                            submit={handleSubmit}
-                            dayValue={dayValue}
-                            setDayValue={setDayValue}
-                        />
-                    </section>
-                    <DayList
-                        day={closing.dayToEdit}
-                        change={closingWeekChangeValueDay}
-                        delete={closingWeekDeleteValueDay}
-                        submit={closingUpdateDayInWeek}
-                        edit
-                    />
-                </Container>
-            )}
+            <h3
+                style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    fontSize: '1.4rem',
+                }}
+            >
+                <span>Fechamento</span>
+                <span>{closing.dayToEdit?.date}</span>
+            </h3>
+            <section>
+                <DayForm
+                    submit={handleSubmit}
+                    dayValue={dayValue}
+                    setDayValue={setDayValue}
+                />
+            </section>
+            <DayList
+                day={closing.dayToEdit}
+                change={closingWeekChangeValueDay}
+                delete={closingWeekDeleteValueDay}
+                submit={closingUpdateDayInWeek}
+                edit
+            />
         </Layout>
     );
 };

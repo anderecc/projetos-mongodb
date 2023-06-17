@@ -1,0 +1,56 @@
+@import '../_mixins'
+@import '../_variables'
+
+.container
+    width: 100%
+    display: flex
+    flex-direction: column
+    font-size: 1rem
+    border-bottom: 1px solid $dark-blue
+
+.label_container
+    width: 100%
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: .5rem 0
+
+.date
+    font-weight: bold
+
+.total
+    font-size: 1rem
+    font-weight: normal
+
+.actions_container
+    display: flex
+    gap: 1rem
+    align-items: center
+    justify-content: space-between
+    a, button
+        font-size: 1.2rem
+        border: none
+        cursor: pointer
+        background-color: transparent
+    a
+        color: $dark-blue
+    button
+        color: $red
+
+.btn_render
+    @include transition
+    cursor: pointer
+    font-size: 1rem
+    border: none
+    background-color: transparent
+    font-weight: bolder
+    &:hover
+        color: $dark-blue
+
+.point_content
+    background-color: rgba(255, 255, 255, .4)
+    padding: .5rem 1rem
+    font-size: 1rem
+    p
+        span
+            font-weight: 500

@@ -1,0 +1,52 @@
+@import '../_mixins'
+@import '../_variables'
+
+.container
+    max-width: 65%
+    z-index: 100
+    background-color: $dark-blue
+    padding: 1rem
+    border-radius: 5px
+    position: fixed
+    overflow: hidden
+    top: 7%
+    right: -100vh
+    transition: .7s all
+    font-size: 1rem
+    &::after
+        content: ''
+        display: flex
+        position: absolute
+        left: 0
+        bottom: 0
+        background-color: $cream
+        height: 5px
+        width: 100%
+    .message
+        color: $white
+
+.container.show
+    right: 5%
+    &::after
+        width: 100%
+        animation: timing 3s linear 1 forwards
+
+.container.hidden
+    right: -100vh
+
+.container.success
+    &::after
+        width: 100%
+        background-color: $green
+
+.container.error
+    &::after
+        width: 100%
+        background-color: $red
+
+@keyframes timing
+    0%
+        width: 100%
+
+    100%
+        width: 0

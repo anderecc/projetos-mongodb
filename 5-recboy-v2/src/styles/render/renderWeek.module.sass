@@ -1,0 +1,47 @@
+@import '../_mixins'
+@import '../_variables'
+
+.container
+    border-bottom: 1px solid $dark-blue
+
+.content
+    display: flex
+    flex-direction: column
+    gap: 1rem
+    border-bottom: 1px solid $dark-blue
+
+.label_container
+    width: 100%
+    padding: .5rem 0
+    div
+        display: flex
+        justify-content: space-between
+        font-size: 1rem
+        p
+            font-size: 1rem
+            font-weight: bold
+            display: flex
+            flex-direction: column
+        a
+            @include transition
+            font-size: 1.2rem
+            color: $dark-green
+            &:hover
+                color: $green
+
+        button
+            cursor: pointer
+            @include transition
+            border: none
+            font-weight: bold
+            font-size: 1rem
+            background-color: transparent
+            color: $dark-blue
+            &:hover
+                color: black
+
+        div
+            display: flex
+            align-items: center
+            justify-content: space-between
+            gap: 1rem
