@@ -99,6 +99,7 @@ const DayForm = ({ edit }) => {
                 <option value="BOCAO">Bocão</option>
                 <option value="STEICY">Steicy</option>
                 <option value="BAGNARA">Bagnara</option>
+                <option value="INABOENO">Ina Boeno</option>
             </select>
             <input
                 className={styles.input_value}
